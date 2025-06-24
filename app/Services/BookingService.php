@@ -33,7 +33,7 @@ class BookingService
             );
             return ['success' => true, 'conflicts' => $this->conflicts];
         } catch (Exception $e) {
-            // dd($e->getMessage());
+            // dd($e->getMessage(), $this->conflicts, $bookings);
             return ['success' => false, 'conflicts' => $this->conflicts, 'error' => $e->getMessage()];
         }
     }
@@ -48,7 +48,6 @@ class BookingService
             $prev = $sortedBookings[$i - 1];
             $curr = $sortedBookings[$i];
 
-
             // throw error if current start time is smaller than previous
             if ($curr['start_time'] < $prev['end_time']) {
 
@@ -58,8 +57,8 @@ class BookingService
                     'start_time1' => $prev['start_time'],
                     'end_time1' => $prev['end_time'],
                     'booking_id2' => $curr['id'],
-                    'start_time1' => $curr['start_time'],
-                    'end_time1' => $curr['end_time'],
+                    'start_time2' => $curr['start_time'],
+                    'end_time2' => $curr['end_time'],
                     'error' => 'Bookings overlap'
                 ];
 

@@ -30,7 +30,7 @@ class BookingServiceTest extends TestCase
         $newBookings = [
             [
                 'user_id' => $user2->id,
-                'start_time' => '2025-06-25 10:30:00', 
+                'start_time' => '2025-06-25 10:30:00',
                 'end_time' => '2025-06-25 11:30:00',
             ],
             [
@@ -45,7 +45,7 @@ class BookingServiceTest extends TestCase
 
         $this->assertFalse($result['success']);
         $this->assertCount(1, $result['conflicts']);
-        $this->assertDatabaseCount('bookings', 1); 
+        $this->assertDatabaseCount('bookings', 1);
     }
 
     public function test_it_accepts_non_conflicting_bookings()
@@ -70,6 +70,8 @@ class BookingServiceTest extends TestCase
         $result = $service->createBatchBookings($room->id, $newBookings);
 
         $this->assertTrue($result['success']);
+
+        dd($result['success']);
         $this->assertDatabaseCount('bookings', 2);
     }
 }
