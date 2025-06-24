@@ -70,8 +70,6 @@ class BookingServiceTest extends TestCase
         $result = $service->createBatchBookings($room->id, $newBookings);
 
         $this->assertTrue($result['success']);
-
-        dd($result['success']);
         $this->assertDatabaseCount('bookings', 2);
     }
 }

@@ -33,7 +33,6 @@ class BookingService
             );
             return ['success' => true, 'conflicts' => $this->conflicts];
         } catch (Exception $e) {
-            // dd($e->getMessage(), $this->conflicts, $bookings);
             return ['success' => false, 'conflicts' => $this->conflicts, 'error' => $e->getMessage()];
         }
     }
@@ -74,12 +73,8 @@ class BookingService
     {
         $conflictingBooking = Booking::where('room_id', $roomId)
             ->where(function ($query) use ($booking) {
-                $query->whereBetween('start_time', [$booking['start_time'], $booking['end_time']])
-                    ->orWhereBetween('end_time', [$booking['start_time'], $booking['end_time']])
-                    ->orWhere(function ($query) use ($booking) {
-                        $query->where('start_time', '<=', $booking['start_time'])
-                            ->where('end_time', '>=', $booking['end_time']);
-                    });
+                $query->where('start_time', '<', $booking['end_time'])
+                    ->where('end_time', '>', $booking['start_time']);
             })->first();
 
         // if conflicting booking exists, log into conflicts
