@@ -27,7 +27,10 @@ class BookingService
                     // insert all bookings if no exception is thrown
                     foreach ($bookings as $booking) {
                         //lets pretend create method exists
-                        Booking::create($booking);
+                        Booking::create(array_merge(
+                            $booking,
+                            ['room_id' => $roomId]
+                        ));
                     }
                 }
             );
